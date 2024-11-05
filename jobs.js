@@ -5,7 +5,15 @@ const addJob = (name, handler, weight) => {
   addHook(name, handler, weight);
 };
 
-const runJobs = async (name, ...args) => {
+const runJobs = (name, ...args) => {
+  const hooks = getHooks(name);
+
+  for (const hook of hooks) {
+    hook.handler(...args);
+  }
+};
+
+const runJobsAsync = async (name, ...args) => {
   const hooks = getHooks(name);
 
   for (const hook of hooks) {
@@ -16,4 +24,5 @@ const runJobs = async (name, ...args) => {
 module.exports = {
   addJob,
   runJobs,
+  runJobsAsync,
 };

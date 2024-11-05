@@ -5,7 +5,19 @@ const addMod = (name, handler, weight) => {
   addHook(name, handler, weight);
 };
 
-const runMods = async (name, value, ...args) => {
+const runMods = (name, value, ...args) => {
+  const hooks = getHooks(name);
+
+  let lastValue = value;
+
+  for (const hook of hooks) {
+    lastValue = hook.handler(lastValue, ...args);
+  }
+
+  return lastValue;
+};
+
+const runModsAsync = async (name, value, ...args) => {
   const hooks = getHooks(name);
 
   let lastValue = value;
@@ -20,4 +32,5 @@ const runMods = async (name, value, ...args) => {
 module.exports = {
   addMod,
   runMods,
+  runModsAsync,
 };

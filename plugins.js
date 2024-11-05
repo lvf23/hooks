@@ -1,4 +1,10 @@
-const loadPlugins = async (plugins, loader) => {
+const loadPlugins = (plugins, loader) => {
+  for (const plugin of plugins) {
+    loader(plugin);
+  }
+};
+
+const loadPluginsAsync = async (plugins, loader) => {
   for (const plugin of plugins) {
     await loader(plugin);
   }
@@ -6,4 +12,5 @@ const loadPlugins = async (plugins, loader) => {
 
 module.exports = {
   loadPlugins,
+  loadPluginsAsync,
 };
